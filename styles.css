@@ -41,8 +41,11 @@ body{
    
 }
 
-.selection-container{
-   
+#individual-result{
+   background-color: rgb(49, 49, 49);
+   padding: 8px;
+   font-weight: bold;
+   border-radius: 15px;
 }
 
 .selection-container div{

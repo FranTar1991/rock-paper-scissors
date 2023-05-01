@@ -1,5 +1,8 @@
 const gameOptions = ["rock","paper","scissors"]
 
+const userSelection = document.getElementById("user-selection")
+const computerSelection = document.getElementById("pc-selection")
+const individualResult = document.getElementById("individual-result")
 const hoverSound = document.getElementById("tik-audio")
 const boomSound = document.getElementById("boom-audio")
 const optionDivs = document.querySelectorAll(`.option`)
@@ -7,11 +10,20 @@ optionDivs.forEach(option =>{
     option.addEventListener("mouseenter",()=>{
         playSound(hoverSound)
     })
-    option.addEventListener("click",()=>{
+    option.addEventListener("click", element =>{
+        setUserSelection(element.currentTarget.id)
         playSound(boomSound)
     })
 })
 
+function setUserSelection(selection){
+    userSelection.innerText = `You selected ${selection}`
+    game(selection)
+}
+
+function setComputerSelection(selection){
+    computerSelection.innerText = `The computer selected ${selection}`
+}
 
 function playSound(sound){
     sound.currentTime = 0
@@ -49,14 +61,14 @@ function playRound(playerSelection, computerSelection){
 
 }
 
-function game(){
+function game(playerSelection){
 let playerWins = 0
 let computerWins = 0
 
-    for(let i = 1; i<=5; i++){
-        let playerSelection = prompt(`Enter your option: Rock, Paper or Scissors`)
+    for(let i = 1; i<=1; i++){
         let computerSelection = getComputerChoice()
-        let winner = playRound(playerSelection, computerSelection)
+        setComputerSelection(computerSelection)
+        let winner = playRound(playerSelection.toLowerCase(), computerSelection)
         if(winner != 0){
             winner == 1 ? computerWins++ : playerWins++
         }
@@ -77,8 +89,6 @@ function announceUltimateWinner(playerWins, computerWins){
         ? announcement =`You won the game with ${playerWins} games and the computer ${computerWins}` 
         : announcement = `The computer won the game with ${computerWins} games and you lost with ${playerWins}`
     }
-
-    console.log(announcement)
 }
 
 function logIndividualResult(winner, computerSelection, playerSelection){
@@ -98,5 +108,5 @@ function logIndividualResult(winner, computerSelection, playerSelection){
         break
     }
     
-    console.log(results)
+    individualResult.innerText= results
 }
