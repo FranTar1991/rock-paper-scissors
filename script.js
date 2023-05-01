@@ -1,5 +1,23 @@
 const gameOptions = ["rock","paper","scissors"]
 
+const hoverSound = document.getElementById("tik-audio")
+const boomSound = document.getElementById("boom-audio")
+const optionDivs = document.querySelectorAll(`.option`)
+optionDivs.forEach(option =>{
+    option.addEventListener("mouseenter",()=>{
+        playSound(hoverSound)
+    })
+    option.addEventListener("click",()=>{
+        playSound(boomSound)
+    })
+})
+
+
+function playSound(sound){
+    sound.currentTime = 0
+    sound.play()
+}
+
 function getComputerChoice(){
     let randomIndex = Math.floor(Math.random()* gameOptions.length)
     return gameOptions[randomIndex]
