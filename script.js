@@ -6,19 +6,28 @@ const individualResult = document.getElementById("individual-result")
 const hoverSound = document.getElementById("tik-audio")
 const boomSound = document.getElementById("boom-audio")
 const optionDivs = document.querySelectorAll(`.option`)
+const userWins = document.getElementById("user-wins")
+const computerWins = document.getElementById("computer-wins")
+const ultimateWinnerContainer = document.getElementById("ultimate-winner-container")
+const ultimateWinner = document.getElementById("ultimate-winner")
+
+let playerWinsCounter = 0
+let computerWinsCounter = 0
+
 optionDivs.forEach(option =>{
     option.addEventListener("mouseenter",()=>{
         playSound(hoverSound)
     })
     option.addEventListener("click", element =>{
-        setUserSelection(element.currentTarget.id)
+        let userSelection = element.currentTarget.id
+        setUserSelection(userSelection)
+        game(userSelection)
         playSound(boomSound)
     })
 })
 
 function setUserSelection(selection){
     userSelection.innerText = `You selected ${selection}`
-    game(selection)
 }
 
 function setComputerSelection(selection){
@@ -62,26 +71,26 @@ function playRound(playerSelection, computerSelection){
 }
 
 function game(playerSelection){
-let playerWins = 0
-let computerWins = 0
 
-    for(let i = 1; i<=1; i++){
-        let computerSelection = getComputerChoice()
-        setComputerSelection(computerSelection)
-        let winner = playRound(playerSelection.toLowerCase(), computerSelection)
-        if(winner != 0){
-            winner == 1 ? computerWins++ : playerWins++
-        }
-        logIndividualResult(winner, computerSelection, playerSelection)
+    let computerSelection = getComputerChoice()
+    setComputerSelection(computerSelection)
+    let winner = playRound(playerSelection.toLowerCase(), computerSelection)
+    if(winner){
+        winner == 1 ? computerWinsCounter++ : playerWinsCounter++
     }
+    logIndividualResult(winner, computerSelection, playerSelection)
+    updateWinsCounters(playerWinsCounter, computerWinsCounter)
 
-announceUltimateWinner(playerWins, computerWins)
-    
+
+    if((computerWinsCounter + playerWinsCounter) == 5){
+        ultimateWinnerContainer.classList.add('overlay')
+        announceUltimateWinner(playerWinsCounter, computerWinsCounter)
+    }
 }
 
 function announceUltimateWinner(playerWins, computerWins){
+    
     let announcement
-
     if(playerWins == computerWins){
         announcement = `It's a tie, the user won ${playerWins} games and the computer ${computerWins}`
     } else{
@@ -89,10 +98,12 @@ function announceUltimateWinner(playerWins, computerWins){
         ? announcement =`You won the game with ${playerWins} games and the computer ${computerWins}` 
         : announcement = `The computer won the game with ${computerWins} games and you lost with ${playerWins}`
     }
+    ultimateWinner.innerText = announcement
 }
 
 function logIndividualResult(winner, computerSelection, playerSelection){
     let results
+
     switch(winner){
      case 0:  
         results = `It's a tie both selected: ${computerSelection}`
@@ -109,4 +120,9 @@ function logIndividualResult(winner, computerSelection, playerSelection){
     }
     
     individualResult.innerText= results
+}
+
+function updateWinsCounters(allUserWins, allPcWins){
+    computerWins.innerText = `Computer wins: ${allPcWins}`
+    userWins.innerText = `Your wins: ${allUserWins}`
 }

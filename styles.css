@@ -18,12 +18,27 @@ body{
 }
 
 
-.score-container{
+.left-container{
     border: 1px solid white;
     border-radius: 15px;
     padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 300px;
     height: 400px;
+}
+h2 {
+    margin: 0;
+  }
+.score-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    align-items: center;
 }
 
 .options-container{
@@ -32,6 +47,8 @@ body{
     align-items: center;
     gap: 50px;
 }
+
+
 
 .options-container > div{
     display: flex;
@@ -73,3 +90,32 @@ img{
     width: 150px;;
     height: 150px;
 }
+
+.overlay {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-200px, -200px);
+    margin: 16px;
+    border: 1px solid white;
+    height: 400px;
+    width: 400px;
+    border-radius: 15px;
+    background-color: rgb(51, 51, 53); /* Set the background color with alpha value */
+    z-index: 999; /* Set a high z-index value to position the overlay in front of other elements */
+  }
+
+  button{
+    color: black;
+    border-radius: 8px;
+    padding: 4px 8px;
+    cursor: pointer;
+  }
+
+  button:hover{
+    background-color: aqua;
+  }
