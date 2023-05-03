@@ -10,9 +10,14 @@ const userWins = document.getElementById("user-wins")
 const computerWins = document.getElementById("computer-wins")
 const ultimateWinnerContainer = document.getElementById("ultimate-winner-container")
 const ultimateWinner = document.getElementById("ultimate-winner")
-
+const playAgainBtn = document.getElementById("play-again-btn")
+let gamesPlayed = 0
 let playerWinsCounter = 0
 let computerWinsCounter = 0
+
+playAgainBtn.addEventListener("click",(event)=>{
+    location.reload()
+})
 
 optionDivs.forEach(option =>{
     option.addEventListener("mouseenter",()=>{
@@ -71,7 +76,7 @@ function playRound(playerSelection, computerSelection){
 }
 
 function game(playerSelection){
-
+    gamesPlayed++
     let computerSelection = getComputerChoice()
     setComputerSelection(computerSelection)
     let winner = playRound(playerSelection.toLowerCase(), computerSelection)
@@ -82,8 +87,8 @@ function game(playerSelection){
     updateWinsCounters(playerWinsCounter, computerWinsCounter)
 
 
-    if((computerWinsCounter + playerWinsCounter) == 5){
-        ultimateWinnerContainer.classList.add('overlay')
+    if( gamesPlayed == 5){
+        ultimateWinnerContainer.style.display ="flex"
         announceUltimateWinner(playerWinsCounter, computerWinsCounter)
     }
 }
